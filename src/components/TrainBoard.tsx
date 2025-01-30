@@ -97,19 +97,17 @@ export function TrainBoard({ text, rows = 6 }: TrainBoardProps) {
           </div>
         </div>
         
-        {/* Fullscreen toggle button */}
-        <div className="flex justify-end mt-6">
-          <button
-            onClick={toggleFullscreen}
-            className="px-4 py-2 bg-zinc-900 text-white rounded hover:bg-zinc-800 focus:outline-none border border-zinc-800"
-          >
-            {isFullscreen ? (
-              <Minimize2 className="w-6 h-6" />
-            ) : (
+        {/* Fullscreen toggle button - only show when not in fullscreen */}
+        {!isFullscreen && (
+          <div className="flex justify-end mt-6">
+            <button
+              onClick={toggleFullscreen}
+              className="px-4 py-2 bg-zinc-900 text-white rounded hover:bg-zinc-800 focus:outline-none border border-zinc-800"
+            >
               <Maximize2 className="w-6 h-6" />
-            )}
-          </button>
-        </div>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
