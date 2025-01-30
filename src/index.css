@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes flipDown {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(90deg);
+  }
+}
+
+.animate-flip-down {
+  animation: flipDown 0.3s ease-in-out;
+  transform-origin: bottom;
+  backface-visibility: hidden;
+}
+
+/* Custom shadow for depth */
+.shadow-inner {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
