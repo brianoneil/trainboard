@@ -14,10 +14,17 @@ const CITIES: City[] = [
 
 function App() {
   const [weatherText, setWeatherText] = useState('LOADING WEATHER...');
-  const [currentCityIndex, setCurrentCityIndex] = useState(0);
+  const [currentCityIndex, setCurrentCityIndex] = useState(() => {
+    const saved = localStorage?.getItem('lastCityIndex');
+    return saved ? parseInt(saved, 10) : 0;
+  });
 
   const switchCity = useCallback(() => {
-    setCurrentCityIndex((prev) => (prev + 1) % CITIES.length);
+    setCurrentCityIndex((prev) => {
+      const newIndex = (prev + 1) % CITIES.length;
+      localStorage?.setItem('lastCityIndex', newIndex.toString());
+      return newIndex;
+    });
   }, []);
 
   // Handle keyboard events
