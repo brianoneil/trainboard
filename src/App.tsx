@@ -32,6 +32,26 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [switchCity]);
 
+  const getWeatherEmoji = (condition: string): string => {
+    const conditionLower = condition.toLowerCase();
+    
+    // Map weather conditions to emojis
+    if (conditionLower.includes('sunny')) return '☀️';
+    if (conditionLower.includes('clear')) return '🌙';
+    if (conditionLower.includes('partly cloudy')) return '⛅';
+    if (conditionLower.includes('cloudy')) return '☁️';
+    if (conditionLower.includes('overcast')) return '☁️';
+    if (conditionLower.includes('mist') || conditionLower.includes('fog')) return '☔︎';
+    if (conditionLower.includes('rain')) return '🌧️';
+    if (conditionLower.includes('drizzle')) return '☔️';
+    if (conditionLower.includes('snow')) return '❄️';
+    if (conditionLower.includes('sleet')) return '❄️';
+    if (conditionLower.includes('thunder') || conditionLower.includes('lightning')) return '⛈️';
+    if (conditionLower.includes('blizzard')) return '❄️';
+    
+    return ''; // Default to no emoji if condition not matched
+  };
+
   const fetchWeather = async (city: City) => {
     console.log(`Fetching weather data for ${city.name}...`);
     try {
@@ -44,13 +64,14 @@ function App() {
       
       const temp = Math.round(data.current.temp_f);
       const condition = data.current.condition.text.toUpperCase();
+      const weatherEmoji = getWeatherEmoji(data.current.condition.text);
       const time = new Date().toLocaleTimeString('en-US', { 
         hour: 'numeric', 
         minute: '2-digit',
         hour12: true 
       }).toUpperCase();
 
-      const newText = `${city.displayName}\n${temp}°F ${condition}\n${time}`;
+      const newText = `${city.displayName}\n${temp}°F ${condition} ${weatherEmoji}\n${time}`;
       console.log('Setting weather text to:', newText);
       setWeatherText(newText);
     } catch (error) {
